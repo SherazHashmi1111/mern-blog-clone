@@ -1,7 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Bonheur+Royale&family=Pacifico&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bonheur+Royale&family=M+PLUS+Rounded+1c&family=Pacifico&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
-
+body{
+  font-family: "M PLUS Rounded 1c", sans-serif;
+}
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
