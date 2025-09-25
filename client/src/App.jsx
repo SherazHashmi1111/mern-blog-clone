@@ -12,9 +12,9 @@ function App() {
       <Routes>
         <Route path={RouteIndex} element={<Layout />}>
           <Route index element={<Index />} />
+        </Route>
           <Route path={RouteLogin} element={<Login />} />
           <Route path={RouteSignup} element={<Signup />} />
-        </Route>
       </Routes>
     </BrowserRouter>
   );

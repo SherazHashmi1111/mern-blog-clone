@@ -72,8 +72,8 @@ function Login() {
   }
 
   return (
-    <div className="w-full h-full flex items-center justify-center">
-      <Card className={`w-75`}>
+    <div className="w-screen h-screen flex items-center justify-center">
+      <Card className={`md:w-100 shadow-2xl`}>
         <CardHeader>
           <CardTitle
             className={`w-full text-center text-3xl font-bold font-[Pacifico] text-red-500 `}

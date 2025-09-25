@@ -110,6 +110,7 @@ export const Login = async (req, res, next) => {
 };
 // Logout user
 export const Logout = async (req, res, next) => {
+  
   try {
     res.clearCookie("access_token", {
       httpOnly: true,
