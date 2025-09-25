@@ -14,8 +14,10 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { RouteLogin, RouteSignup } from "@/helpers/RouteNames";
+import { getEnv } from "@/helpers/getEnv";
+import { showToast } from "@/helpers/showToast";
 
 const formSchema = z
   .object({
@@ -32,27 +34,52 @@ const formSchema = z
     path: ["retypepassword"], // 🔑 error will show under retypepassword field
   });
 
-
 function Signup() {
+  const navigate = useNavigate();
   // initialize form
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      name: "",
       email: "",
       password: "",
+      retypepassword: "",
     },
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+  async function onSubmit(values) {
+    const { retypepassword, ...data } = values;
+    // Sending data logic will go here
+    try {
+      const res = await fetch(`${getEnv("VITE_API_BASE_URL")}/auth/register`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      const resData = await res.json();
+
+      // handle HTTP errors (non-2xx)
+      if (!res.ok) {
+        showToast("error", resData?.message || "Something went wrong!");
+        return;
+      }
+
+      showToast("success", "User registered successfully! Please Login");
+      form.reset();
+      navigate(RouteLogin);
+    } catch (error) {
+      showToast(
+        "error",
+        error?.message || "Something went wrong in register user"
+      );
+    }
   }
 
   return (
     <div className="w-full h-full flex items-center justify-center">
-      <Card className={`w-75`}>
+      <Card className={`w-100`}>
         <CardHeader>
           <CardTitle
             className={`w-full text-center text-3xl font-bold font-[Pacifico] text-red-500 `}

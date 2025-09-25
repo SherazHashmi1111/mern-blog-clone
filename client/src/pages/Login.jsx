@@ -14,8 +14,12 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Link } from "react-router-dom";
-import { RouteSignup } from "@/helpers/RouteNames";
+import { Link, useNavigate } from "react-router-dom";
+import { RouteIndex, RouteSignup } from "@/helpers/RouteNames";
+import { showToast } from "@/helpers/showToast";
+import { getEnv } from "@/helpers/getEnv";
+import { useDispatch } from "react-redux";
+import { setUser } from "@/store/authSlice";
 
 const formSchema = z.object({
   email: z.email(),
@@ -26,6 +30,8 @@ const formSchema = z.object({
 });
 
 function Login() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   // initialize form
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -36,10 +42,33 @@ function Login() {
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+  async function onSubmit(data) {
+    try {
+      const res = await fetch(`${getEnv("VITE_API_BASE_URL")}/auth/login`, {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      const resData = await res.json();
+
+      // handle HTTP errors (non-2xx)
+      if (!res.ok) {
+        showToast("error", resData?.message || "Something went wrong!");
+        return;
+      }
+
+      dispatch(setUser(resData))
+      showToast("success", "User loggedin successfully!");
+      form.reset();
+      navigate(RouteIndex);
+    } catch (error) {
+      showToast(
+        "error",
+        error?.message || "Something went wrong in register user"
+      );
+    }
   }
 
   return (
