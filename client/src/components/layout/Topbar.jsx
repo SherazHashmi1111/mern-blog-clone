@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button } from "../ui/button";
 import { Link, useNavigate } from "react-router-dom";
-import { RouteLogin } from "@/helpers/RouteNames";
+import { RouteLogin, RouteProfile } from "@/helpers/RouteNames";
 import logoImg from "../../assets/birdLogo.png";
 import SearchBox from "../SearchBox";
 import { useSelector } from "react-redux";
@@ -18,6 +18,7 @@ import {
 import userImg from "../../assets/user.png";
 import { getEnv } from "@/helpers/getEnv";
 import { showToast } from "@/helpers/showToast";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 function Topbar() {
   const user = useSelector((state) => state.user);
@@ -49,7 +50,7 @@ function Topbar() {
     }
   };
   return (
-    <div className="w-full h-12 px-5 fixed flex justify-between items-center z-20">
+    <div className="w-full h-12 px-5 fixed flex justify-between items-center z-20 border-b-1">
       <div className="flex  gap-2 items-center justify-center">
         <div className="">
           <img src={logoImg} className="w-20" />
@@ -63,15 +64,20 @@ function Topbar() {
         {user && user?.isLoggedIn ? (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <img src={userImg} className="w-15" />
+              <Avatar className="w-15 h-15 cursor-pointer">
+                <AvatarImage src={ userImg} />
+                <AvatarFallback>CN</AvatarFallback>
+              </Avatar>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56" align="start">
               <DropdownMenuLabel>My Account</DropdownMenuLabel>
               <DropdownMenuGroup>
+                  <Link to={RouteProfile}>
                 <DropdownMenuItem>
                   Profile
                   <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
                 </DropdownMenuItem>
+                  </Link>
               </DropdownMenuGroup>
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={logoutHandler}>
