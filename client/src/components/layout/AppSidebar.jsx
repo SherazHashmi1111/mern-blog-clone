@@ -22,7 +22,7 @@ import { RouteIndex } from "@/helpers/RouteNames";
 
 function AppSidebar() {
   return (
-    <Sidebar className={`mt-12`}>
+    <Sidebar className={`mt-15`}>
       <SidebarHeader />
       <SidebarContent>
         <SidebarGroup />
