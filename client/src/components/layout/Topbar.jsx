@@ -23,7 +23,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 function Topbar() {
   const user = useSelector((state) => state.user);
   const navigate = useNavigate();
-
+// Profile picture handling
+  const avatar = user?.user?.user.avatar;
   const logoutHandler = async () => {
     try {
       const res = await fetch(`${getEnv("VITE_API_BASE_URL")}/auth/logout`, {
@@ -50,7 +51,7 @@ function Topbar() {
     }
   };
   return (
-    <div className="w-full h-12 px-5 fixed flex justify-between items-center z-20 border-b-1">
+    <div className="w-full h-15 px-5 fixed flex justify-between items-center z-20 border-b-1 bg-white">
       <div className="flex  gap-2 items-center justify-center">
         <div className="">
           <img src={logoImg} className="w-20" />
@@ -64,8 +65,8 @@ function Topbar() {
         {user && user?.isLoggedIn ? (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Avatar className="w-15 h-15 cursor-pointer">
-                <AvatarImage src={ userImg} />
+              <Avatar className="w-12 h-12 cursor-pointer">
+                <AvatarImage src={ avatar ||  userImg} />
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
             </DropdownMenuTrigger>
@@ -81,7 +82,7 @@ function Topbar() {
               </DropdownMenuGroup>
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={logoutHandler}>
-                Log out
+                Logout
                 <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
               </DropdownMenuItem>
             </DropdownMenuContent>

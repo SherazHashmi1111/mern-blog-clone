@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -18,28 +18,30 @@ import { Link, useNavigate } from "react-router-dom";
 import { RouteLogin, RouteSignup } from "@/helpers/RouteNames";
 import { getEnv } from "@/helpers/getEnv";
 import { showToast } from "@/helpers/showToast";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Textarea } from "@/components/ui/textarea";
+import Dropzone from "react-dropzone";
+import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
+import { FaCameraRetro } from "react-icons/fa";
+import { setUser } from "@/store/authSlice";
 
 // FormSchema
-const formSchema = z
-  .object({
-    name: z.string().min(3, "Name is too short"),
-    email: z.string().email("Invalid email address"),
-    password: z
-      .string()
-      .min(8, "Password should be 8 characters long")
-      .max(32, "Password is too long"),
-    bio: z.string(),
-  })
-  .refine((data) => data.password === data.retypepassword, {
-    message: "Passwords do not match",
-    path: ["retypepassword"], // 🔑 error will show under retypepassword field
-  });
+const formSchema = z.object({
+  name: z.string().min(3, "Name is too short"),
+  email: z.string().email("Invalid email address"),
+  password: z.string(),
+  bio: z.string(),
+});
 
 function Profile() {
   const user = useSelector((state) => state.user);
-  console.log(user);
+  const dispatch = useDispatch();
+  // Profile picture handling
+  const avatar = user?.user?.user.avatar;
+
+  const profilePic = avatar || "https://github.com/shadcn.png";
+  const [filePreview, setFilePreview] = useState();
+  const [file, setFile] = useState();
 
   // initialize form
   const form = useForm({
@@ -52,10 +54,41 @@ function Profile() {
     },
   });
 
-  // 2. Define a submit handler.
-  async function onSubmit(values) {
-    const { retypepassword, ...data } = values;
-    // Sending data logic will go here
+  // ===============================
+  // Submit Handler
+  // ===============================
+  async function onSubmit(data) {
+    try {
+      // Build FormData with file + form fields
+      const formData = new FormData();
+      if (file) formData.append("file", file);
+      formData.append("data", JSON.stringify(data));
+
+      const res = await fetch(
+        `${getEnv("VITE_API_BASE_URL")}/user/update-user/${
+          user?.user?.user.id
+        }`,
+        {
+          method: "PUT",
+          credentials: "include",
+          body: formData,
+        }
+      );
+
+      const resData = await res.json();
+
+      // Handle errors
+      if (!res.ok || resData?.error) {
+        showToast("error", resData?.message || "Something went wrong!");
+        return;
+      }
+
+      // Update redux state
+      dispatch(setUser({ user: resData.newUser }));
+      showToast("success", "Profile updated successfully!");
+    } catch (error) {
+      showToast("error", error?.message || "Something went wrong!");
+    }
   }
 
   // ===============================
@@ -70,9 +103,15 @@ function Profile() {
       });
     }
   }, [user, form]);
+
+  const dropzoneHandler = (files) => {
+    const file = files[0];
+    setFile(file);
+    setFilePreview(URL.createObjectURL(file));
+  };
   return (
     <div className="w-full h-full flex items-center justify-center">
-      <Card className={`w-[90%] h-[90%]`}>
+      <Card className={`w-[90%] min-h-[90%] my-10`}>
         <CardHeader>
           <CardTitle
             className={`w-full text-center text-3xl font-bold font-[Pacifico] text-red-500 `}
@@ -83,6 +122,33 @@ function Profile() {
         <CardContent>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+              <div className="flex items-center justify-center ">
+                <Dropzone
+                  onDrop={(acceptedFiles) => dropzoneHandler(acceptedFiles)}
+                  className="cursor-pointer"
+                >
+                  {({ getRootProps, getInputProps }) => (
+                    <section>
+                      <div {...getRootProps()}>
+                        <input {...getInputProps()} />
+                        <Avatar className="w-30 h-30 relative group">
+                          <AvatarImage
+                            src={filePreview || profilePic}
+                            className="w-25 h-25 rounded-full"
+                          />
+                          {/* Overlay Camera Icon */}
+                          <div
+                            className="absolute inset-0 z-50 rounded-full border-4 border-red-500 bg-black/30 
+                  hidden group-hover:flex items-center justify-center cursor-pointer"
+                          >
+                            <FaCameraRetro className="w-10 h-10 text-red-500" />
+                          </div>
+                        </Avatar>
+                      </div>
+                    </section>
+                  )}
+                </Dropzone>
+              </div>
               <FormField
                 control={form.control}
                 name="name"
