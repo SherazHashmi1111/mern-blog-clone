@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { getEnv } from "@/helpers/getEnv";
 import Loading from "@/helpers/Loading";
 import useFetch from "@/hooks/useFetch";
-import React, { useMemo, useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import {
   Table,
@@ -22,13 +22,10 @@ import { showToast } from "@/helpers/showToast";
 
 function CategoryDetails() {
     const [refreshData, setRefreshData] = useState();
-  const options = useMemo(
-    () => ({ method: "GET", credentials: "include" }),
-    [refreshData]
-  );
+  
   const { data, error, loading } = useFetch(
     `${getEnv("VITE_API_BASE_URL")}/category/all`,
-    options
+    { method: "GET", credentials: "include" },[refreshData]
   );
 
    const handleDelete = (id) => {

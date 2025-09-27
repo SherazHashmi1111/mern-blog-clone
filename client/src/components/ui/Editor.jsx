@@ -465,9 +465,11 @@ export default function Editor(props) {
                   );
                 }}
                 onAfterDestroy={() => {
-                  Array.from(editorWordCountRef.current.children).forEach(
-                    (child) => child.remove()
-                  );
+                  if (editorWordCountRef.current) {
+                    Array.from(editorWordCountRef.current.children).forEach(
+                      (child) => child.remove()
+                    );
+                  }
                 }}
                 editor={ClassicEditor}
                 config={editorConfig}

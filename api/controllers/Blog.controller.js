@@ -67,7 +67,7 @@ export const getAllBlogs = async (req, res, next) => {
 // // Get one blog by id
 export const getBlog = async (req, res, next) => {
   try {
-    const { blogid } = req.body;
+    const { blogid } = req.params;
 
     const blog = await Blog.findById(blogid)
       .populate("author", "name")
