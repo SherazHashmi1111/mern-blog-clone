@@ -18,7 +18,7 @@ import { FaBlog } from "react-icons/fa";
 import { FaComments } from "react-icons/fa6";
 import { FaUsers } from "react-icons/fa6";
 import { GoDot } from "react-icons/go";
-import { RouteIndex } from "@/helpers/RouteNames";
+import { RouteAddCategory, RouteCategories, RouteIndex } from "@/helpers/RouteNames";
 
 function AppSidebar() {
   return (
@@ -35,7 +35,7 @@ function AppSidebar() {
             </SidebarMenuItem>
             <SidebarMenuItem>
               <SidebarMenuButton asChild>
-                <Link><BiCategoryAlt className="text-red-500"/>Category</Link>
+                <Link to={RouteCategories}><BiCategoryAlt className="text-red-500"/>Category</Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
             <SidebarMenuItem>

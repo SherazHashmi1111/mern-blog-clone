@@ -30,7 +30,8 @@ function Topbar() {
   const user = useSelector((state) => state.user);
   const navigate = useNavigate();
   // Profile picture handling
-  const avatar = user?.user?.user.avatar;
+  const avatar = user?.user?.user?.avatar;
+  
   const logoutHandler = async () => {
     try {
       const res = await fetch(`${getEnv("VITE_API_BASE_URL")}/auth/logout`, {

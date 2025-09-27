@@ -6,16 +6,16 @@ import { SidebarProvider, SidebarTrigger } from "../ui/sidebar";
 
 function Layout() {
   return (
-    <SidebarProvider>
+    <SidebarProvider >
       {/* Topbar */}
       <Topbar />
 
-      <div className="flex">
+      <div className="flex w-full">
         {/* Sidebar */}
         <AppSidebar />
 
         {/* Main content */}
-        <main className="pt-15 w-full min-h-screen">
+        <main className="pt-15 w-full">
           {/* Place trigger where you want to toggle sidebar (e.g. in Topbar or inside mobile header) */}
           {/* <SidebarTrigger /> */}
           <Outlet />

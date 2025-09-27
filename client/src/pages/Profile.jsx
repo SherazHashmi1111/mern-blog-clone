@@ -110,8 +110,8 @@ function Profile() {
     setFilePreview(URL.createObjectURL(file));
   };
   return (
-    <div className="w-full h-full flex items-center justify-center">
-      <Card className={`w-[90%] min-h-[90%] my-10`}>
+    <div className="w-full min-h-screen flex items-center justify-center">
+      <Card className={`w-[90%]  min-h-[90%] my-10`}>
         <CardHeader>
           <CardTitle
             className={`w-full text-center text-3xl font-bold font-[Pacifico] text-red-500 `}
