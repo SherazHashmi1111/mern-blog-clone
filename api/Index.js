@@ -6,6 +6,7 @@ import mongoose from "mongoose";
 import AuthRoute from "./routes/Auth.route.js";
 import UserRoute from "./routes/User.routes.js";
 import CategoryRoute from "./routes/Category.route.js";
+import BlogRoute from "./routes/blog.routes.js";
 const app = express();
 dotenv.config();
 
@@ -19,13 +20,13 @@ const MONGODB_URL = process.env.MONGODB_URL;
 app.use(cors({ origin: FRONTEND_URL, credentials: true }));
 const PORT = process.env.PORT;
 
-// Routes 
-app.use("/api/auth", AuthRoute)
-app.use("/api/user", UserRoute)
-app.use("/api/category", CategoryRoute)
+// Routes
+app.use("/api/auth", AuthRoute);
+app.use("/api/user", UserRoute);
+app.use("/api/category", CategoryRoute);
+app.use("/api/blog", BlogRoute);
 
-
-// MongoDB Connection 
+// MongoDB Connection
 mongoose
   .connect(MONGODB_URL, { dbName: "mern-blog-clone" })
   .then(() => {
@@ -40,9 +41,7 @@ app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
 
-
-
-// Global error 
+// Global error
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
   const message = err.message || "Internal Server Error";

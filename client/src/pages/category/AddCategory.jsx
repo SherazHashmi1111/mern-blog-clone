@@ -117,7 +117,7 @@ function AddCategory() {
 
               <Button
                 type="submit"
-                className={`w-sm rounded-full mt-4 mx-auto block`}
+                className={`w-[50%] rounded-full mt-4 mx-auto block`}
               >
                 Add Category
               </Button>
