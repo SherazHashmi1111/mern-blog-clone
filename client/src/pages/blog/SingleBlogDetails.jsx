@@ -6,10 +6,10 @@ import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { useParams } from "react-router-dom";
 import { decode } from "entities";
 import useFetch from "@/hooks/useFetch";
-// import Comment from "@/components/Comment";
-// import CommentCount from "@/components/CommentCount";
-// import LikeCount from "@/components/LikeCount";
-// import RelatedBlog from "./RelatedBlog";
+import Comment from "@/components/Comment";
+import CommentCount from "@/components/CommentCount";
+import LikeCount from "@/components/LikeCount";
+import RelatedBlog from "./RelatedBlog";
 function SingleBlogDetails() {
   const { blog, category } = useParams();
 
@@ -47,8 +47,8 @@ function SingleBlogDetails() {
               className={"mr-4 cursor-pointer flex gap-5"}
               variant={"outline"}
             >
-              {/* <CommentCount blogid={data.blog._id} /> */}
-              {/* <LikeCount blogid={data.blog._id} /> */}
+              <CommentCount blogid={data.blog._id} />
+              <LikeCount blogid={data.blog._id} />
             </div>
           </div>
           <div className="w-full h-50 md:h-100 my-4 mx-auto">
@@ -63,11 +63,11 @@ function SingleBlogDetails() {
             className=" text-justify py-2"
             dangerouslySetInnerHTML={{ __html: decode(data.blog.blogContent) }}
           ></div>
-          {/* <Comment blogid={data.blog._id} /> */}
+          <Comment blogid={data.blog._id} />
         </div>
       )}
       <div className="md:w-[25%] w-full border-2 ">
-        {/* <RelatedBlog blog={blog} category={category} /> */}
+        <RelatedBlog blog={blog} category={category} />
       </div>
     </div>
   );

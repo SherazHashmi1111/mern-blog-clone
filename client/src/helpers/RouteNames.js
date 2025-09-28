@@ -38,3 +38,14 @@ export const RouteCategoryBlogs = (category) => {
     return `/blog/${category}`;
   }
 };
+
+export const RouteSearch = (q) => {
+  if (q) {
+    return `/search?q=${q}`;
+  } else {
+    return `/search`;
+  }
+};
+
+export const RouteComments = "/comments";
+export const RouteUsers = "/users";

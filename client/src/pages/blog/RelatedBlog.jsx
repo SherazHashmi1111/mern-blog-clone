@@ -1,8 +1,8 @@
 import React from "react";
 import { getEnv } from "@/helpers/getEnv";
-import { useFetch } from "@/hooks/useFetch";
 import { Link } from "react-router-dom";
-import { RouteBlogDetails } from "@/helpers/RouteName";
+import { RouteBlogDetails } from "@/helpers/RouteNames";
+import useFetch from "@/hooks/useFetch";
 
 function RelatedBlog({ blog, category }) {
   const { data, error, loading } = useFetch(

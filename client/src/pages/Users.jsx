@@ -20,131 +20,133 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import  useFetch  from "@/hooks/useFetch";
 import { getEnv } from "@/helpers/getEnv";
 import { FaRegEdit } from "react-icons/fa";
 import { MdDeleteForever } from "react-icons/md";
 import { deleteData } from "@/helpers/handleDelete";
 import { showToast } from "@/helpers/showToast";
+import moment from "moment";
+import userPng from "../assets/user.png";
 
-function BlogDetails() {
+function Users() {
   const [refreshData, setRefreshData] = useState();
-  const [blogs, setBlogs] = useState([]); // state for blogs
+  const [users, setUsers] = useState([]); // state for users
 
   //Fetch Blogs
   useEffect(() => {
-    const fetchBlogs = async () => {
+    const fetchUsers = async () => {
       try {
-        const res = await fetch(`${getEnv("VITE_API_BASE_URL")}/blog/all`, {
+        const res = await fetch(`${getEnv("VITE_API_BASE_URL")}/user/all`, {
           method: "GET",
           credentials: "include",
         });
 
         if (!res.ok) {
-          throw new Error("Failed to fetch blogs");
+          throw new Error("Failed to fetch users");
         }
 
         const data = await res.json();
-        setBlogs(data); // store blogs in state
+        setUsers(data); // store users in state
       } catch (err) {
         console.error(err.message);
       }
     };
-    fetchBlogs();
+    fetchUsers();
   }, [refreshData]);
 
   //Deleting blog logic
   const handleDelete = async (id) => {
     const response = await deleteData(
-      `${getEnv("VITE_API_BASE_URL")}/blog/delete/${id}`
+      `${getEnv("VITE_API_BASE_URL")}/user/delete/${id}`
     );
 
     if (response) {
       setRefreshData(!refreshData);
-      showToast("Success", "Blog Deleted");
+      showToast("Success", "Comment Deleted");
     } else {
-      showToast("Error", "Blog Not Deleted");
+      showToast("Error", "Comment Not Deleted");
     }
   };
-  
+
   return (
     <div>
       <div className="">
         <Card className="max-w-[95%] mx-4 mt-20">
           <CardHeader>
-            <Button className="cursor-pointer md:w-24 " asChild>
-              <Link to={RouteAddBolg}>Add Blog</Link>
-            </Button>
+            <h2 className="text-2xl font-bold text-violet-700 underline capitalize">
+              All useres Details
+            </h2>
           </CardHeader>
           <CardContent className={`w-full`}>
-            <Table className="md:text-sm text-[.5rem]">
+            <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Author</TableHead>
-                  <TableHead>Category Name</TableHead>
-                  <TableHead>Title</TableHead>
-                  <TableHead>Slug</TableHead>
+                  <TableHead>Role</TableHead>
+                  <TableHead>Name</TableHead>
+                  <TableHead>Email</TableHead>
+                  <TableHead>Avatar</TableHead>
                   <TableHead>Date</TableHead>
                   <TableHead>Action</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {blogs && blogs?.blogs?.length > 0 ? (
-                  blogs.blogs.map((item) => (
+                {users && users?.users?.length > 0 ? (
+                  users.users.map((item) => (
                     <TableRow key={item._id}>
                       <TableCell
                         className={`w-[17%] whitespace-normal break-words`}
                       >
-                        {item.author.name}
+                        {item.role}
                       </TableCell>
                       <TableCell
                         className={`w-[17%] whitespace-normal break-words`}
                       >
-                        {item.category.name}
+                        {item.name}
                       </TableCell>
                       <TableCell
                         className={`w-[17%] whitespace-normal break-words`}
                       >
-                        {item.title}
+                        {item.email}
                       </TableCell>
+                      <TableCell
+                        className={`w-[17%]  whitespace-normal break-words`}
+                      >
+                        <img
+                          src={item.avatar || userPng}
+                          className="w-10 h-10 object-cover"
+                        />
+                      </TableCell>
+
                       <TableCell
                         className={`w-[17%] whitespace-normal break-words`}
                       >
-                        {item.slug}
+                        {moment(item.createdAt).format("MMM Do YY")}
                       </TableCell>
+
                       <TableCell
                         className={`w-[17%] whitespace-normal break-words`}
                       >
-                        {new Date(item.createdAt).toLocaleString("en-US", {
-                          year: "numeric",
-                          month: "long",
-                          day: "numeric",
-                        })}
-                      </TableCell>
-                      <TableCell className="whitespace-normal overflow-x-auto max-w-[150px]">
-                        <div className="flex items-center">
-                          <Button
-                            className="cursor-pointer p-1 text-xs md:p-2 md:text-sm"
-                            asChild
-                          >
-                            <Link to={RouteUpdateBlog(item._id)}>
-                              <FaRegEdit />
-                            </Link>
-                          </Button>
-                          <Button
-                            className="cursor-pointer ml-2 p-1 text-xs md:p-2 md:text-sm"
-                            variant="destructive"
-                            onClick={() => handleDelete(item._id)}
-                          >
-                            <MdDeleteForever />
-                          </Button>
-                        </div>
+                        <Button
+                          className={`cursor-pointer ml-3 ${
+                            item.role === "admin"
+                              ? "disabled:opacity-50 disabled:cursor-not-allowed"
+                              : ""
+                          }`}
+                          variant="destructive"
+                          onClick={() => handleDelete(item._id)}
+                          disabled={item.role === "admin"}
+                        >
+                          <MdDeleteForever />
+                        </Button>
                       </TableCell>
                     </TableRow>
                   ))
                 ) : (
                   <TableRow>
-                    <TableCell colSpan="6" className={`text-center py-10 text-4xl font-bold`}>
+                    <TableCell
+                      colSpan="6"
+                      className={`text-center pt-5 text-2xl font-bold `}
+                    >
                       Data not found
                     </TableCell>
                   </TableRow>
@@ -158,4 +160,4 @@ function BlogDetails() {
   );
 }
 
-export default BlogDetails;
+export default Users;
