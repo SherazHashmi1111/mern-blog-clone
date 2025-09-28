@@ -44,6 +44,7 @@ function AppSidebar() {
       credentials: "include",
     }
   );
+
   return (
     <Sidebar className={`mt-15`}>
       <SidebarHeader>
@@ -63,7 +64,7 @@ function AppSidebar() {
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
-            {user.user.user.role === "admin" || "user" ? (
+            {(user.isLoggedIn && user.user.user.role === "admin") || "user" ? (
               <>
                 <SidebarMenuItem>
                   <SidebarMenuButton asChild>
@@ -86,7 +87,7 @@ function AppSidebar() {
               <></>
             )}
 
-            {user.user.user.role === "admin" ? (
+            {user.isLoggedIn && user.user.user.role === "admin" ? (
               <>
                 <SidebarMenuItem>
                   <SidebarMenuButton asChild>
