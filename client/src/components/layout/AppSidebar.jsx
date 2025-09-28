@@ -64,7 +64,7 @@ function AppSidebar() {
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
-            {(user.isLoggedIn && user.user.user.role === "admin") || "user" ? (
+            {user.isLoggedIn && user.user.user.role === "user" ? (
               <>
                 <SidebarMenuItem>
                   <SidebarMenuButton asChild>
