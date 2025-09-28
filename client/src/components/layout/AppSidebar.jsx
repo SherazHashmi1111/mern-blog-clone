@@ -47,7 +47,9 @@ function AppSidebar() {
   return (
     <Sidebar className={`mt-15`}>
       <SidebarHeader>
-        <SearchBox/>
+        <div className="block md:hidden">
+          <SearchBox />
+        </div>
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup />

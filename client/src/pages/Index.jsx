@@ -34,29 +34,25 @@ function Index() {
 
   if (loading) return <Loading />;
   return (
-    <Card
-      className={
-        " mt-5 md:mt-24 w-[98%] mx-auto px-5 grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-5 place-items-center "
-      }
-    >
-      {blogs && blogs?.blogs?.length > 0 ? (
-        blogs.blogs.map((item) => (
-          
-          <BlogCard
-          
-            key={item._id}
-            author={item.author.name}
-            title={item.title}
-            featuredImage={item.featuredImage}
-            date={item.updatedAt}
-            avatar={item.author.avatar}
-            category={item.category}
-            slug={item.slug}
-          />
-        ))
-      ) : (
-        <div className="text-2xl font-bold col-span-3">No data found</div>
-      )}
+    <Card className={" mt-5 md:mt-24 w-[98%] mx-auto px-5 "}>
+      <div className="w-full flex items-center justify-center gap-10 flex-wrap">
+        {blogs && blogs?.blogs?.length > 0 ? (
+          blogs.blogs.map((item) => (
+            <BlogCard
+              key={item._id}
+              author={item.author.name}
+              title={item.title}
+              featuredImage={item.featuredImage}
+              date={item.updatedAt}
+              avatar={item.author.avatar}
+              category={item.category}
+              slug={item.slug}
+            />
+          ))
+        ) : (
+          <div className="text-2xl font-bold col-span-3">No data found</div>
+        )}
+      </div>
     </Card>
   );
 }
