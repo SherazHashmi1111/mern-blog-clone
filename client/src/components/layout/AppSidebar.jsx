@@ -30,8 +30,11 @@ import {
 } from "@/helpers/RouteNames";
 import useFetch from "@/hooks/useFetch";
 import { getEnv } from "@/helpers/getEnv";
+import { useSelector } from "react-redux";
 
 function AppSidebar() {
+  const  user  = useSelector((state) => state.user);
+  
    const { data, error, loading } = useFetch(
     `${getEnv("VITE_API_BASE_URL")}/category/all`,
     {
@@ -54,7 +57,7 @@ function AppSidebar() {
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
-            <SidebarMenuItem>
+            {user.user.user.role === 'admin'|| 'user' ? <><SidebarMenuItem>
               <SidebarMenuButton asChild>
                 <Link to={RouteCategories}>
                   <BiCategoryAlt className="text-red-500" />
@@ -69,8 +72,9 @@ function AppSidebar() {
                   Blog
                 </Link>
               </SidebarMenuButton>
-            </SidebarMenuItem>
-            <SidebarMenuItem>
+            </SidebarMenuItem></>:<></>}
+
+            { user.user.user.role === 'admin' ? <><SidebarMenuItem>
               <SidebarMenuButton asChild>
                 <Link to={RouteComments}>
                   <FaComments className="text-red-500" />
@@ -85,7 +89,8 @@ function AppSidebar() {
                   Users
                 </Link>
               </SidebarMenuButton>
-            </SidebarMenuItem>
+            </SidebarMenuItem></> : <></>}
+
           </SidebarMenu>
         </SidebarGroupContent>
         <SidebarGroup />
