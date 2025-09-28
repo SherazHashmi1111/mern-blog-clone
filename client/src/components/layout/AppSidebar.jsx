@@ -31,11 +31,13 @@ import {
 import useFetch from "@/hooks/useFetch";
 import { getEnv } from "@/helpers/getEnv";
 import { useSelector } from "react-redux";
+import logoImg from "../../assets/birdLogo.png";
+import SearchBox from "../SearchBox";
 
 function AppSidebar() {
-  const  user  = useSelector((state) => state.user);
-  
-   const { data, error, loading } = useFetch(
+  const user = useSelector((state) => state.user);
+
+  const { data, error, loading } = useFetch(
     `${getEnv("VITE_API_BASE_URL")}/category/all`,
     {
       method: "GET",
@@ -44,7 +46,9 @@ function AppSidebar() {
   );
   return (
     <Sidebar className={`mt-15`}>
-      <SidebarHeader />
+      <SidebarHeader>
+        <SearchBox/>
+      </SidebarHeader>
       <SidebarContent>
         <SidebarGroup />
         <SidebarGroupContent>
@@ -57,51 +61,61 @@ function AppSidebar() {
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
-            {user.user.user.role === 'admin'|| 'user' ? <><SidebarMenuItem>
-              <SidebarMenuButton asChild>
-                <Link to={RouteCategories}>
-                  <BiCategoryAlt className="text-red-500" />
-                  Category
-                </Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-            <SidebarMenuItem>
-              <SidebarMenuButton asChild>
-                <Link to={RouteBlog}>
-                  <FaBlog className="text-red-500" />
-                  Blog
-                </Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem></>:<></>}
+            {user.user.user.role === "admin" || "user" ? (
+              <>
+                <SidebarMenuItem>
+                  <SidebarMenuButton asChild>
+                    <Link to={RouteCategories}>
+                      <BiCategoryAlt className="text-red-500" />
+                      Category
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+                <SidebarMenuItem>
+                  <SidebarMenuButton asChild>
+                    <Link to={RouteBlog}>
+                      <FaBlog className="text-red-500" />
+                      Blog
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              </>
+            ) : (
+              <></>
+            )}
 
-            { user.user.user.role === 'admin' ? <><SidebarMenuItem>
-              <SidebarMenuButton asChild>
-                <Link to={RouteComments}>
-                  <FaComments className="text-red-500" />
-                  Comments
-                </Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-            <SidebarMenuItem>
-              <SidebarMenuButton asChild>
-                <Link to={RouteUsers}>
-                  <FaUsers className="text-red-500" />
-                  Users
-                </Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem></> : <></>}
-
+            {user.user.user.role === "admin" ? (
+              <>
+                <SidebarMenuItem>
+                  <SidebarMenuButton asChild>
+                    <Link to={RouteComments}>
+                      <FaComments className="text-red-500" />
+                      Comments
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+                <SidebarMenuItem>
+                  <SidebarMenuButton asChild>
+                    <Link to={RouteUsers}>
+                      <FaUsers className="text-red-500" />
+                      Users
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              </>
+            ) : (
+              <></>
+            )}
           </SidebarMenu>
         </SidebarGroupContent>
         <SidebarGroup />
-         {/* Side bar Categories group */}
+        {/* Side bar Categories group */}
         <SidebarGroup>
           <SidebarGroupLabel>Categories</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {data && data?.categories?.length > 0 ? (
                 data.categories.map((category, index) => (
-                  
                   <SidebarMenuItem key={index}>
                     <SidebarMenuSubButton asChild>
                       <Link to={RouteCategoryBlogs(category.slug)}>

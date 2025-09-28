@@ -149,7 +149,7 @@ function UpdateBlog() {
   };
 
   return (
-    <Card className="max-w-screen mx-4 mt-24">
+    <Card className="max-w-screen mx-4 md:mt-24 mt-10">
       <CardHeader className="text-4xl font-bold text-orange-500">
         Update Blog
       </CardHeader>
@@ -176,7 +176,9 @@ function UpdateBlog() {
                             </SelectItem>
                           ))
                         ) : (
-                          <SelectItem value="no-category">No category</SelectItem>
+                          <SelectItem value="no-category">
+                            No category
+                          </SelectItem>
                         )}
                       </SelectContent>
                     </Select>
@@ -219,11 +221,13 @@ function UpdateBlog() {
             {/* Featured Image */}
             <div className="mb-3 inline-block">
               <span>Featured Image</span>
-              <Dropzone onDrop={(acceptedFiles) => handleFileSelection(acceptedFiles)}>
+              <Dropzone
+                onDrop={(acceptedFiles) => handleFileSelection(acceptedFiles)}
+              >
                 {({ getRootProps, getInputProps }) => (
                   <div {...getRootProps()}>
                     <input {...getInputProps()} />
-                    <div className="flex items-center justify-center h-54 w-96 mb-4 border-4 overflow-hidden border-dashed cursor-pointer rounded">
+                    <div className="flex items-center justify-center md:h-54 md:w-96 mb-4 border-4 overflow-hidden border-dashed cursor-pointer rounded">
                       {filePreview && <img src={filePreview} alt="" />}
                     </div>
                   </div>
@@ -232,17 +236,20 @@ function UpdateBlog() {
             </div>
 
             {/* Blog Content */}
+
             <FormField
               control={form.control}
               name="blogContent"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="w-[100px] md:w-auto">
                   <FormLabel>Blog Content</FormLabel>
                   <FormControl>
-                    <Editor
-                      value={field.value}
-                      onChange={(val) => field.onChange(val)}
-                    />
+                    <div className="w-80 md:w-full">
+                      <Editor
+                        value={field.value}
+                        onChange={(val) => field.onChange(val)}
+                      />
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </FormItem>

@@ -71,7 +71,7 @@ function Users() {
   return (
     <div>
       <div className="">
-        <Card className="max-w-[95%] mx-4 mt-20">
+        <Card className="max-w-[95%] mx-4 md:mt-20 mt-5">
           <CardHeader>
             <h2 className="text-2xl font-bold text-violet-700 underline capitalize">
               All useres Details

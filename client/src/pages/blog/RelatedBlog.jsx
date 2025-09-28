@@ -3,6 +3,7 @@ import { getEnv } from "@/helpers/getEnv";
 import { Link } from "react-router-dom";
 import { RouteBlogDetails } from "@/helpers/RouteNames";
 import useFetch from "@/hooks/useFetch";
+import Loading from "@/helpers/Loading";
 
 function RelatedBlog({ blog, category }) {
   const { data, error, loading } = useFetch(
@@ -14,9 +15,8 @@ function RelatedBlog({ blog, category }) {
   );
   // console.log(data.relatedBlogs);
 
-  if (loading) return <p>Loading related blogs...</p>;
+  if (loading) return <Loading/>;
   if (error) return <p>Error loading related blogs.</p>;
-  if (!data || data.length === 0) return <p>No related blogs found.</p>;
 
   return (
     <div className="related-blogs p-4">

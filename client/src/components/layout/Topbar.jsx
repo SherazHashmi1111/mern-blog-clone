@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button } from "../ui/button";
 import { Link, useNavigate } from "react-router-dom";
-import { RouteLogin, RouteProfile } from "@/helpers/RouteNames";
+import { RouteAddBolg, RouteLogin, RouteProfile } from "@/helpers/RouteNames";
 import logoImg from "../../assets/birdLogo.png";
 import SearchBox from "../SearchBox";
 import { useSelector } from "react-redux";
@@ -31,7 +31,7 @@ function Topbar() {
   const navigate = useNavigate();
   // Profile picture handling
   const avatar = user?.user?.user?.avatar;
-  
+
   const logoutHandler = async () => {
     try {
       const res = await fetch(`${getEnv("VITE_API_BASE_URL")}/auth/logout`, {
@@ -77,11 +77,6 @@ function Topbar() {
         <div className="hidden sm:block">
           <SearchBox />
         </div>
-
-        {/* Show Icon on screens < sm */}
-        <div className="block sm:hidden">
-          <IoSearchOutline className="w-6 h-6 cursor-pointer" />
-        </div>
       </div>
       <div className="">
         {user && user?.isLoggedIn ? (
@@ -105,7 +100,7 @@ function Topbar() {
                     <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
                   </DropdownMenuItem>
                 </Link>
-                <Link to={RouteProfile}>
+                <Link to={RouteAddBolg}>
                   <DropdownMenuItem className="flex gap-2 items-center">
                     <FaPlus className="text-green-800" />
                     Add Blog

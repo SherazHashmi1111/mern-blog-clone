@@ -12,7 +12,7 @@ function BlogCard({ author, title, featuredImage, date, avatar, category, slug }
   const user = userData.user.user;
 
   return (
-    <Card className={"w-full lg:h-110 md:h-80"} key={""}>
+    <Card className={"w-75 h-100 overflow-hidden"} key={""}>
       <CardContent>
         {/* Card topbar */}
         <div className="flex items-center justify-between">

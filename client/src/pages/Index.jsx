@@ -36,7 +36,7 @@ function Index() {
   return (
     <Card
       className={
-        " mt-24 w-[98%] mx-auto px-5 grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-5 place-items-center "
+        " mt-5 md:mt-24 w-[98%] mx-auto px-5 grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-5 place-items-center "
       }
     >
       {blogs && blogs?.blogs?.length > 0 ? (

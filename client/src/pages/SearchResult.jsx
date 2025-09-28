@@ -2,7 +2,7 @@ import BlogCard from "@/components/BlogCard";
 import { Card } from "@/components/ui/card";
 import { getEnv } from "@/helpers/getEnv";
 import Loading from "@/helpers/Loading";
-import  useFetch  from "@/hooks/useFetch";
+import useFetch from "@/hooks/useFetch";
 import React from "react";
 import { useSearchParams } from "react-router-dom";
 
@@ -21,11 +21,7 @@ function SearchResult() {
 
   if (loading) return <Loading />;
   return (
-    <Card
-      className={
-        " mt-24 w-[98%] mx-auto px-5 grid grid-cols-3 gap-5 place-items-center "
-      }
-    >
+    <div className="p-5 flex gap-5 flex-wrap items-center justify-center">
       {data && data?.blogs?.length > 0 ? (
         data.blogs.map((item) => (
           <BlogCard
@@ -42,7 +38,7 @@ function SearchResult() {
       ) : (
         <div>No data found</div>
       )}
-    </Card>
+    </div>
   );
 }
 

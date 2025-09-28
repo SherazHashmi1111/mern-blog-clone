@@ -47,7 +47,7 @@ function CategoryDetails() {
   if (loading) return <Loading />;
 
   return (
-    <Card className="md:max-w-screen-md md:mx-auto mt-40 flex items-center justify-center">
+    <Card className="md:max-w-screen-md w-90 mx-auto md:mt-40 mt-10 flex items-center justify-center">
       <CardHeader className="flex items-center justify-center">
         <Button className="cursor-pointer" asChild>
           <Link to={RouteAddCategory}>Add Category</Link>

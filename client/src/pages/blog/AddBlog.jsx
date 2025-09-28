@@ -139,7 +139,7 @@ function AddBlog() {
   };
 
   return (
-    <Card className={"max-w-screen mx-4 mt-24"}>
+    <Card className={"max-w-screen mx-4 md:mt-24 my-5"}>
       <CardHeader className={"text-4xl font-bold text-orange-500"}>
         Add a new Blog
       </CardHeader>
@@ -226,7 +226,7 @@ function AddBlog() {
                   {({ getRootProps, getInputProps }) => (
                     <div {...getRootProps()}>
                       <input {...getInputProps()} />
-                      <div className="flex items-center justify-center h-54 w-96 mb-4 border-4 overflow-hidden border-dashed cursor-pointer rounded">
+                      <div className="flex items-center justify-center h-45 w-80 md:h-54 md:w-96 mb-4 border-4 overflow-hidden border-dashed cursor-pointer rounded">
                         <img src={filePreview} alt="" />
                       </div>
                     </div>

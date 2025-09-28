@@ -71,7 +71,7 @@ function Comments() {
   return (
     <div>
       <div className="">
-        <Card className="max-w-[95%] mx-4 mt-20">
+        <Card className="max-w-[95%] mx-4 md:mt-20 my-5">
           
           <CardContent className={`w-full`}>
             <Table>

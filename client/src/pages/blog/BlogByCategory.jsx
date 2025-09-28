@@ -31,7 +31,7 @@ function BlogByCategory() {
   }
 
   return (
-    <div className="mt-24 w-[98%] mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 place-items-center">
+    <div className="mt-24 w-[98%] mx-auto flex flex-wrap gap-5">
       {data && data?.blog?.length > 0 ? (
         data.blog.map((item) => (
           <BlogCard
