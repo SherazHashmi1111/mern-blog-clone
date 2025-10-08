@@ -1,6 +1,6 @@
 // All imports
 import User from "../models/user.model.js";
-import bcryptjs from "bcryptjs";
+import bcrypt from "bcryptjs";
 import cloudinary from "../config/cloudinary.js";
 import { handleError } from "./../helpers/handleError.js";
 
@@ -53,7 +53,7 @@ export const updateUser = async (req, res, next) => {
         throw new Error("Password must be at least 8 characters long");
       }
 
-      const hashedPassword = bcryptjs.hashSync(data.password, 10); // use salt rounds
+      const hashedPassword = bcrypt.hashSync(data.password, 10); // use salt rounds
       user.password = hashedPassword;
     }
 

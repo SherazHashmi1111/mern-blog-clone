@@ -7,13 +7,11 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "build": "echo 'No build step required for backend'",
-    "postinstall": "npm install"
+    "build": "echo 'No build step required for backend'"
   },
   "author": "Sheraz Hashmi",
   "license": "ISC",
   "dependencies": {
-    "bcrypt": "^6.0.0",
     "bcryptjs": "^3.0.2",
     "cloudinary": "^2.7.0",
     "cookie-parser": "^1.4.7",
