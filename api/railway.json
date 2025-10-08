@@ -1,0 +1,16 @@
+{
+  "build": {
+    "builder": "node"
+  },
+  "deploy": {
+    "start": "npm start"
+  },
+  "environments": {
+    "production": {
+      "env": {
+        "MONGODB_URL": "YOUR_MONGO_URI_HERE",
+        "FRONTEND_URL": "YOUR_FRONTEND_URL_HERE"
+      }
+    }
+  }
+}

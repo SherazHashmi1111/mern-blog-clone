@@ -9,18 +9,20 @@ import CategoryRoute from "./routes/Category.route.js";
 import BlogRoute from "./routes/blog.routes.js";
 import CommentRoute from "./routes/Comment.route.js";
 import LikeRoute from "./routes/Like.route.js";
-const app = express();
+
 dotenv.config();
 
+const app = express();
+
+// Middlewares
 app.use(cookieParser());
 app.use(express.json());
 
-const FRONTEND_URL = process.env.FRONTEND_URL;
+// Environment variables
+const FRONTEND_URL = process.env.FRONTEND_URL || "*"; // fallback for local
 const MONGODB_URL = process.env.MONGODB_URL;
 
-// Basic setting
 app.use(cors({ origin: FRONTEND_URL, credentials: true }));
-const PORT = process.env.PORT;
 
 // Routes
 app.use("/api/auth", AuthRoute);
@@ -33,26 +35,16 @@ app.use("/api/like", LikeRoute);
 // MongoDB Connection
 mongoose
   .connect(MONGODB_URL, { dbName: "mern-blog-clone" })
-  .then(() => {
-    console.log("Connected to MongoDB");
-  })
-  .catch((error) => {
-    console.log(error);
-  });
+  .then(() => console.log("Connected to MongoDB"))
+  .catch((err) => console.error("MongoDB Connection Error:", err));
 
-// Port setting
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+// Start server
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
-// Global error
+// Global error handler
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
   const message = err.message || "Internal Server Error";
-
-  res.status(statusCode).json({
-    success: false,
-    statusCode,
-    message,
-  });
+  res.status(statusCode).json({ success: false, statusCode, message });
 });
