@@ -34,7 +34,7 @@ function BlogCard({ author, title, featuredImage, date, avatar, category, slug }
           <img
             src={featuredImage}
             alt=""
-            className="rounded-lg lg:h-36 w-full md:h-24 h-24"
+            className="rounded-lg lg:h-36 w-full md:h-24 h-48 bg-cover"
           />
         </div>
         <div className="mt-5 flex text-gray-600 items-center">
