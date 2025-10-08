@@ -1,9 +1,11 @@
 {
   "name": "api",
   "version": "1.0.0",
-  "description": "",
+  "description": "MERN Blog Backend API",
   "main": "index.js",
+  "type": "module",
   "scripts": {
+    "start": "node index.js",
     "dev": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -19,9 +21,10 @@
     "entities": "^6.0.0",
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
-    "mongo-db": "^1.0.2",
     "mongoose": "^8.18.2",
-    "multer": "^2.0.2",
+    "multer": "^2.0.2"
+  },
+  "devDependencies": {
     "nodemon": "^3.1.10"
   }
 }
